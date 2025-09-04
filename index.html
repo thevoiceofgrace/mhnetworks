@@ -5,50 +5,145 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pleroma Telecommunications</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; }
+    h1,h2,h3,h4 { font-family: 'Playfair Display', serif; }
+
+    /* Fade-up animation */
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-up { animation: fadeUp 1s ease-out forwards; }
+    .fade-up-delay { animation-delay: 0.3s; }
+    .fade-up-delay-2 { animation-delay: 0.6s; }
+
+    /* Initial state for scroll animations */
+    .scroll-fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease-out;
+    }
+
+    .scroll-fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
-<body class="bg-gradient-to-tr from-blue-100 to-yellow-50 text-gray-800 font-sans">
-  <header class="bg-blue-600 text-white p-4 shadow-md">
-    <h1 class="text-3xl font-bold">Pleroma Telecommunications</h1>
-    <p class="text-sm">Connect to the future</p>
+<body class="bg-gradient-to-b from-blue-50 to-blue-100 text-gray-800">
+
+  <!-- Slim Navbar / Header -->
+  <header class="bg-white text-gray-800 shadow-md sticky top-0 z-50">
+    <div class="flex items-center justify-between max-w-6xl mx-auto py-3 px-6">
+      <div class="flex items-center space-x-4">
+        <img src="logo.png" alt="Pleroma Logo" class="h-28 w-28 rounded-full shadow-sm">
+        <div>
+          <h1 class="text-3xl md:text-4xl font-bold tracking-tight"></h1>
+          <p class="text-sm md:text-base text-gray-500 tracking-wide mt-0.5">Connect to the Future</p>
+        </div>
+      </div>
+      <nav class="hidden md:flex space-x-6 font-semibold text-gray-700">
+        <a href="#plans" class="hover:text-blue-700 transition-colors">Plans</a>
+        <a href="#coverage" class="hover:text-blue-700 transition-colors">Coverage</a>
+        <a href="#contact" class="hover:text-blue-700 transition-colors">Contact</a>
+      </nav>
+    </div>
   </header>
 
-  <section class="flex flex-col md:flex-row items-center justify-center p-6">
-    <div class="md:w-1/2 mb-6 md:mb-0">
-      <img src="dude.jpg" alt="Unlimited Internet" class="rounded-xl shadow-lg w-full" />
-    </div>
-    <div class="md:w-1/2 space-y-4">
-      <h2 class="text-2xl font-bold text-green-600">Get Unlimited Internet</h2>
-      <p class="text-lg">Affordable Wi-Fi for your phone, laptop, or smart TV. Stay connected, stream, and learn—right from your home.</p>
+  <!-- Hero Section -->
+  <section class="relative bg-cover bg-center bg-no-repeat h-screen flex items-center" style="background-image: url('header.jpeg');">
+    <!-- Dark Overlay -->
+    <div class="absolute inset-0 bg-black bg-opacity-40"></div> <!-- Semi-transparent overlay -->
 
-      <div class="bg-yellow-100 p-4 rounded-lg shadow-md">
-        <h3 class="text-xl font-semibold text-blue-700 mb-2">🎓 Student Deal</h3>
-        <ul class="list-disc ml-6 text-gray-700">
-          <li>2 Mbps Speed</li>
-          <li>Connect up to 2 Devices</li>
-          <li>Ideal for YouTube, Zoom, WhatsApp, Research</li>
-          <li>Only <strong class="text-green-700">R30/week</strong></li>
-        </ul>
-      </div>
-
-      <div class="bg-green-100 p-4 rounded-lg shadow-md">
-        <h3 class="text-xl font-semibold text-yellow-700 mb-2">🏡 Family Deal</h3>
-        <ul class="list-disc ml-6 text-gray-700">
-          <li>5 Mbps Speed</li>
-          <li>Connect up to 4 Devices</li>
-          <li>Stream Netflix, Music, TikTok, Zoom Classes</li>
-          <li>Only <strong class="text-blue-700">R60/week</strong></li>
-        </ul>
-      </div>
-
-      <a href="https://wa.me/27633544103" class="inline-block mt-4 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow-md">
-        📱 Contact via WhatsApp: 063 3544 103
+    <div class="relative max-w-6xl mx-auto px-6 text-center md:text-left text-white">
+      <h2 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight drop-shadow-lg fade-up">Premium connection, Super speed!</h2>
+      <p class="text-lg md:text-2xl mb-8 tracking-wide drop-shadow-md fade-up-delay">
+        Stay connected, stream, learn, and work from the comfort of your home. Simple, reliable, and affordable hotspot service.
+      </p>
+      <a href="#plans" class="inline-block bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white font-semibold py-4 px-8 rounded-lg shadow-lg transition transform hover:-translate-y-1 hover:scale-105 fade-up-delay-2">
+        View Our Plans
       </a>
     </div>
   </section>
 
-  <footer class="text-center text-sm text-gray-600 p-4 mt-10">
+  <!-- Plans Section -->
+  <section id="plans" class="py-20 bg-blue-50">
+    <h3 class="text-center text-4xl md:text-5xl font-bold text-gray-800 mb-16 tracking-wide">Choose Your Plan</h3>
+    <div class="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto px-6">
+      <!-- Student Deal -->
+      <div class="bg-white p-10 rounded-3xl shadow-lg scroll-fade-up">
+        <h4 class="text-3xl font-bold text-blue-700 mb-6 tracking-wide">🎓 Geleza Deal</h4>
+        <ul class="space-y-4 text-gray-700 text-lg">
+          <li>⚡ 2 Mbps Speed</li>
+          <li>📱 Connect up to 2 Devices</li>
+          <li>🎥 Perfect for YouTube, Zoom, WhatsApp, Research</li>
+          <li class="text-2xl font-bold text-blue-800 mt-3">R30 / week</li>
+        </ul>
+      </div>
+
+      <!-- Family Deal -->
+      <div class="bg-white p-10 rounded-3xl shadow-lg scroll-fade-up">
+        <h4 class="text-3xl font-bold text-blue-700 mb-6 tracking-wide">🏡 Gabhadiya Deal</h4>
+        <ul class="space-y-4 text-gray-700 text-lg">
+          <li>⚡ 5 Mbps Speed</li>
+          <li>📱 Connect up to 4 Devices</li>
+          <li>🎬 Stream Netflix, Music, TikTok, Zoom Classes</li>
+          <li class="text-2xl font-bold text-blue-800 mt-3">R200 / Month</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Coverage Section -->
+  <section id="coverage" class="py-20 bg-blue-100">
+    <div class="max-w-4xl mx-auto text-center px-6">
+      <h3 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6 tracking-wide">📍 Coverage</h3>
+      <p class="text-lg md:text-xl text-gray-700 tracking-wide">Currently available in <strong>Kwa-Thema</strong>. More areas coming soon!</p>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-20 bg-blue-50 text-center">
+    <h3 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6 tracking-wide">Get in Touch</h3>
+    <p class="text-lg md:text-xl mb-8 text-gray-700 tracking-wide">Need help or want to subscribe? Reach us instantly on WhatsApp.</p>
+    <a href="https://wa.me/27633544103" class="inline-block bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white font-semibold py-4 px-8 rounded-lg shadow-lg transition transform hover:-translate-y-1 hover:scale-105">
+      📱 Chat on WhatsApp: 063 3544 103
+    </a>
+  </section>
+
+  <!-- Footer -->
+  <footer class="text-center text-gray-600 p-8 bg-white mt-10 shadow-inner tracking-wide">
     &copy; 2025 Pleroma Telecommunications. All rights reserved.
   </footer>
+
+  <!-- Floating WhatsApp Button -->
+  <a href="https://wa.me/27633544103" 
+     class="fixed bottom-6 right-6 bg-blue-700 hover:bg-blue-800 text-white rounded-full shadow-lg p-5 flex items-center justify-center z-50 transition transform hover:-translate-y-1 hover:scale-105"
+     target="_blank" 
+     aria-label="Chat on WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-8 h-8">
+      <path d="M12.04 2C6.51 2 2 6.48 2 12c0 2.12.62 4.09 1.77 5.82L2 22l4.29-1.7A10.02 10.02 0 0 0 12.04 22c5.52 0 10.03-4.48 10.03-10s-4.51-10-10.03-10Zm0 18.27c-1.7 0-3.35-.44-4.8-1.27l-.34-.2-2.55 1 1.02-2.47-.22-.36A8.33 8.33 0 0 1 3.67 12c0-4.62 3.75-8.38 8.37-8.38 4.62 0 8.38 3.76 8.38 8.38 0 4.63-3.76 8.27-8.38 8.27Zm4.7-6.2c-.26-.13-1.54-.76-1.78-.85-.24-.09-.41-.13-.58.13s-.66.85-.82 1.03c-.15.17-.3.19-.56.06-.26-.13-1.1-.41-2.1-1.32-.78-.69-1.3-1.55-1.45-1.81-.15-.26-.02-.4.11-.53.11-.11.26-.3.39-.45.13-.15.17-.26.26-.43.09-.17.04-.32-.02-.45-.06-.13-.58-1.4-.8-1.93-.21-.51-.43-.44-.58-.45-.15-.01-.32-.02-.49-.02-.17 0-.45.06-.68.32-.23.26-.89.87-.89 2.12 0 1.25.91 2.46 1.04 2.63.13.17 1.78 2.72 4.31 3.8.6.26 1.07.42 1.43.54.6.19 1.15.16 1.58.1.48-.07 1.54-.63 1.76-1.25.22-.62.22-1.15.15-1.26-.06-.11-.24-.17-.5-.3Z"/>
+    </svg>
+  </a>
+
+  <!-- Scroll Animation Script -->
+  <script>
+    const faders = document.querySelectorAll('.scroll-fade-up');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    faders.forEach(fader => observer.observe(fader));
+  </script>
+
 </body>
 </html>
-
