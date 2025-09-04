@@ -5,13 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pleroma Telecommunications</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', sans-serif; }
-    h1,h2,h3,h4 { font-family: 'Playfair Display', serif; }
+    h1,h2,h3,h4 { font-family: 'Montserrat', sans-serif; }
 
-    /* Fade-up animation */
     @keyframes fadeUp {
       0% { opacity: 0; transform: translateY(30px); }
       100% { opacity: 1; transform: translateY(0); }
@@ -21,46 +20,68 @@
     .fade-up-delay { animation-delay: 0.3s; }
     .fade-up-delay-2 { animation-delay: 0.6s; }
 
-    /* Initial state for scroll animations */
-    .scroll-fade-up {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.8s ease-out;
-    }
-
-    .scroll-fade-up.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .scroll-fade-up { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+    .scroll-fade-up.visible { opacity: 1; transform: translateY(0); }
   </style>
 </head>
 <body class="bg-gradient-to-b from-blue-50 to-blue-100 text-gray-800">
 
-  <!-- Slim Navbar / Header -->
+  <!-- Navbar with Burger Menu -->
   <header class="bg-white text-gray-800 shadow-md sticky top-0 z-50">
     <div class="flex items-center justify-between max-w-6xl mx-auto py-3 px-6">
       <div class="flex items-center space-x-4">
         <img src="logo.png" alt="Pleroma Logo" class="h-28 w-28 rounded-full shadow-sm">
         <div>
-          <h1 class="text-3xl md:text-4xl font-bold tracking-tight"></h1>
           <p class="text-sm md:text-base text-gray-500 tracking-wide mt-0.5">Connect to the Future</p>
         </div>
       </div>
+
+      <!-- Desktop Menu -->
       <nav class="hidden md:flex space-x-6 font-semibold text-gray-700">
-        <a href="#plans" class="hover:text-blue-700 transition-colors">Plans</a>
-        <a href="#coverage" class="hover:text-blue-700 transition-colors">Coverage</a>
+        <a href="#plans" class="hover:text-blue-700 transition-colors"></a>
+        <a href="#coverage" class="hover:text-blue-700 transition-colors"></a>
+        <a href="#benefits" class="hover:text-blue-700 transition-colors"></a>
+        <a href="#partners" class="hover:text-blue-700 transition-colors">Partners</a>
         <a href="#contact" class="hover:text-blue-700 transition-colors">Contact</a>
+        <a href="terms and conditions.html" class="hover:text-blue-700 transition-colors">Terms & Conditions</a>
+        <a href="business.html" class="hover:text-blue-700 transition-colors">Business Opportunity</a>
+        <a href="about us.html" class="hover:text-blue-700 transition-colors">About Us</a>
+        <a href="letter-from-director.html" class="hover:text-blue-700 transition-colors"></a>
+        <a href="help.html" class="hover:text-blue-700 transition-colors">Help</a>
       </nav>
+
+      <!-- Mobile Burger Button -->
+      <div class="md:hidden">
+        <button id="burger-btn" class="focus:outline-none">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
+      <ul class="flex flex-col space-y-4 px-6 py-4 font-semibold text-gray-700">
+        <li><a href="#plans" class="hover:text-blue-700 transition-colors">Plans</a></li>
+        <li><a href="#coverage" class="hover:text-blue-700 transition-colors">Coverage</a></li>
+        <li><a href="#benefits" class="hover:text-blue-700 transition-colors">Benefits</a></li>
+        <li><a href="#partners" class="hover:text-blue-700 transition-colors">Partners</a></li>
+        <li><a href="#contact" class="hover:text-blue-700 transition-colors">Contact</a></li>
+        <li><a href="terms-and-conditions.html" class="hover:text-blue-700 transition-colors">Terms & Conditions</a></li>
+        <li><a href="business-opportunity.html" class="hover:text-blue-700 transition-colors">Business Opportunity</a></li>
+        <li><a href="about-us.html" class="hover:text-blue-700 transition-colors">About Us</a></li>
+        <li><a href="letter-from-director.html" class="hover:text-blue-700 transition-colors">Letter from Director</a></li>
+        <li><a href="help.html" class="hover:text-blue-700 transition-colors">Help</a></li>
+      </ul>
     </div>
   </header>
 
   <!-- Hero Section -->
   <section class="relative bg-cover bg-center bg-no-repeat h-screen flex items-center" style="background-image: url('header.jpeg');">
-    <!-- Dark Overlay -->
-    <div class="absolute inset-0 bg-black bg-opacity-40"></div> <!-- Semi-transparent overlay -->
-
+    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
     <div class="relative max-w-6xl mx-auto px-6 text-center md:text-left text-white">
-      <h2 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight drop-shadow-lg fade-up">Premium connection, Super speed!</h2>
+      <h2 class="text-5xl md:text-6xl font-bold mb-6 tracking-tight drop-shadow-lg fade-up">Premium connection, Super speed!</h2>
       <p class="text-lg md:text-2xl mb-8 tracking-wide drop-shadow-md fade-up-delay">
         Stay connected, stream, learn, and work from the comfort of your home. Simple, reliable, and affordable hotspot service.
       </p>
@@ -74,27 +95,31 @@
   <section id="plans" class="py-20 bg-blue-50">
     <h3 class="text-center text-4xl md:text-5xl font-bold text-gray-800 mb-16 tracking-wide">Choose Your Plan</h3>
     <div class="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto px-6">
-      <!-- Student Deal -->
-      <div class="bg-white p-10 rounded-3xl shadow-lg scroll-fade-up">
-        <h4 class="text-3xl font-bold text-blue-700 mb-6 tracking-wide">🎓 Geleza Deal</h4>
-        <ul class="space-y-4 text-gray-700 text-lg">
-          <li>⚡ 2 Mbps Speed</li>
-          <li>📱 Connect up to 2 Devices</li>
-          <li>🎥 Perfect for YouTube, Zoom, WhatsApp, Research</li>
-          <li class="text-2xl font-bold text-blue-800 mt-3">R30 / week</li>
+
+      <!-- Geleza Deal -->
+      <div class="bg-white p-8 rounded-3xl shadow-lg scroll-fade-up flex flex-col transform transition duration-300 hover:-translate-y-1 hover:scale-105 active:scale-95">
+        <img src="geleza.jpg" alt="Geleza Deal" class="w-full h-48 object-cover rounded-2xl mb-6">
+        <h4 class="text-3xl font-bold text-blue-700 mb-4 tracking-wide">Geleza Deal</h4>
+        <ul class="space-y-3 text-gray-700 text-lg flex-grow">
+          <li>5 Mbps Speed</li>
+          <li>Connect up to 2 Devices</li>
+          <li>Perfect for YouTube, Zoom, WhatsApp, Research</li>
         </ul>
+        <p class="text-2xl font-bold text-blue-800 mt-6">R30 / week</p>
       </div>
 
-      <!-- Family Deal -->
-      <div class="bg-white p-10 rounded-3xl shadow-lg scroll-fade-up">
-        <h4 class="text-3xl font-bold text-blue-700 mb-6 tracking-wide">🏡 Gabhadiya Deal</h4>
-        <ul class="space-y-4 text-gray-700 text-lg">
-          <li>⚡ 5 Mbps Speed</li>
-          <li>📱 Connect up to 4 Devices</li>
-          <li>🎬 Stream Netflix, Music, TikTok, Zoom Classes</li>
-          <li class="text-2xl font-bold text-blue-800 mt-3">R200 / Month</li>
+      <!-- Gabhadiya Deal -->
+      <div class="bg-white p-8 rounded-3xl shadow-lg scroll-fade-up flex flex-col transform transition duration-300 hover:-translate-y-1 hover:scale-105 active:scale-95">
+        <img src="gabhadiya.jpg" alt="Gabhadiya Deal" class="w-full h-48 object-cover rounded-2xl mb-6">
+        <h4 class="text-3xl font-bold text-blue-700 mb-4 tracking-wide">Gabhadiya Deal</h4>
+        <ul class="space-y-3 text-gray-700 text-lg flex-grow">
+          <li>10 Mbps Speed</li>
+          <li>Connect up to 7 Devices</li>
+          <li>Stream Netflix, Music, TikTok, Zoom Classes</li>
         </ul>
+        <p class="text-2xl font-bold text-blue-800 mt-6">R200 / Month</p>
       </div>
+
     </div>
   </section>
 
@@ -103,6 +128,70 @@
     <div class="max-w-4xl mx-auto text-center px-6">
       <h3 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6 tracking-wide">📍 Coverage</h3>
       <p class="text-lg md:text-xl text-gray-700 tracking-wide">Currently available in <strong>Kwa-Thema</strong>. More areas coming soon!</p>
+    </div>
+  </section>
+
+  <!-- Benefits Section -->
+  <section id="benefits" class="py-20 bg-blue-50">
+    <h3 class="text-center text-4xl md:text-5xl font-bold text-gray-800 mb-16 tracking-wide">How You Can Benefit</h3>
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto px-6">
+
+      <!-- Home Security -->
+      <div class="bg-white p-8 rounded-3xl shadow-lg transform transition duration-300 hover:-translate-y-1 hover:scale-105 active:scale-95 flex flex-col items-center text-center">
+        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-blue-600 to-blue-400 flex items-center justify-center mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12h.01M12 12h.01M9 12h.01M3 7a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" />
+          </svg>
+        </div>
+        <h4 class="text-2xl font-bold text-blue-700 mb-2">Home Security</h4>
+        <p class="text-gray-700 text-lg">Keep your home safe with reliable connectivity for cameras and alarm systems.</p>
+      </div>
+
+      <!-- Smart Home -->
+      <div class="bg-white p-8 rounded-3xl shadow-lg transform transition duration-300 hover:-translate-y-1 hover:scale-105 active:scale-95 flex flex-col items-center text-center">
+        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-blue-600 to-blue-400 flex items-center justify-center mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M13 5v6h6M5 10v10h14V10" />
+          </svg>
+        </div>
+        <h4 class="text-2xl font-bold text-blue-700 mb-2">Smart Home</h4>
+        <p class="text-gray-700 text-lg">Easily control lights, thermostats, and appliances from anywhere with stable internet.</p>
+      </div>
+
+      <!-- Gaming & Streaming -->
+      <div class="bg-white p-8 rounded-3xl shadow-lg transform transition duration-300 hover:-translate-y-1 hover:scale-105 active:scale-95 flex flex-col items-center text-center">
+        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-blue-600 to-blue-400 flex items-center justify-center mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 10h.01M15 10h.01M12 14h.01M5 12a2 2 0 012-2h10a2 2 0 012 2v4a2 2 0 01-2 2H7a2 2 0 01-2-2v-4z" />
+          </svg>
+        </div>
+        <h4 class="text-2xl font-bold text-blue-700 mb-2">Gaming & Streaming</h4>
+        <p class="text-gray-700 text-lg">Experience smooth gameplay and buffer-free streaming with fast and reliable Wi-Fi.</p>
+      </div>
+
+      <!-- Education -->
+      <div class="bg-white p-8 rounded-3xl shadow-lg transform transition duration-300 hover:-translate-y-1 hover:scale-105 active:scale-95 flex flex-col items-center text-center">
+        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-blue-600 to-blue-400 flex items-center justify-center mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 20l9-5-9-5-9 5 9 5zm0 0v-5l9-5v5l-9 5z" />
+          </svg>
+        </div>
+        <h4 class="text-2xl font-bold text-blue-700 mb-2">Education</h4>
+        <p class="text-gray-700 text-lg">Support learning for all ages with stable internet for research, online classes, and collaboration.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Partners Section -->
+  <section id="partners" class="py-20 bg-blue-100">
+    <h3 class="text-center text-4xl md:text-5xl font-bold text-gray-800 mb-16 tracking-wide">Our Payment & Tech Partners</h3>
+    <div class="flex flex-wrap justify-center items-center gap-12 max-w-6xl mx-auto px-6">
+      <div class="flex items-center justify-center p-4 bg-white rounded-2xl shadow-md w-36 h-24"><img src="payfast.png" alt="PayFast Logo" class="object-contain w-full h-full"></div>
+      <div class="flex items-center justify-center p-4 bg-white rounded-2xl shadow-md w-36 h-24"><img src="1voucher.png" alt="1Voucher Logo" class="object-contain w-full h-full"></div>
+      <div class="flex items-center justify-center p-4 bg-white rounded-2xl shadow-md w-36 h-24"><img src="cudy.png" alt="Cudy Logo" class="object-contain w-full h-full"></div>
+      <div class="flex items-center justify-center p-4 bg-white rounded-2xl shadow-md w-36 h-24"><img src="mikrotik.png" alt="MikroTik Logo" class="object-contain w-full h-full"></div>
+      <div class="flex items-center justify-center p-4 bg-white rounded-2xl shadow-md w-36 h-24"><img src="powerlynx.png" alt="PowerLynx Logo" class="object-contain w-full h-full"></div>
     </div>
   </section>
 
@@ -130,8 +219,14 @@
     </svg>
   </a>
 
-  <!-- Scroll Animation Script -->
+  <!-- Scripts -->
   <script>
+    // Mobile burger menu toggle
+    const burgerBtn = document.getElementById('burger-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    burgerBtn.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
+
+    // Scroll fade animation
     const faders = document.querySelectorAll('.scroll-fade-up');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -141,7 +236,6 @@
         }
       });
     }, { threshold: 0.3 });
-
     faders.forEach(fader => observer.observe(fader));
   </script>
 
