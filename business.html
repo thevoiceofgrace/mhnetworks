@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Business Opportunity - Pleroma Telecommunications</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    h1,h2,h3,h4 { font-family: 'Montserrat', sans-serif; }
+  </style>
+</head>
+<body class="bg-blue-50 text-gray-800">
+
+  <!-- Navbar identical to main page -->
+  <header class="bg-white text-gray-800 shadow-md sticky top-0 z-50">
+    <div class="flex items-center justify-between max-w-6xl mx-auto py-3 px-6">
+      <div class="flex items-center space-x-4">
+        <img src="logo.png" alt="Pleroma Logo" class="h-28 w-28 rounded-full shadow-sm">
+      </div>
+      <nav class="hidden md:flex space-x-6 font-semibold text-gray-700">
+        <a href="index.html" class="hover:text-blue-700 transition-colors">Home</a>
+        <a href="terms and conditions.html" class="hover:text-blue-700 transition-colors">Terms & Conditions</a>
+        <a href="business.html" class="hover:text-blue-700 transition-colors">Business Opportunity</a>
+        <a href="about-us.html" class="hover:text-blue-700 transition-colors">About Us</a>
+        <a href="help.html" class="hover:text-blue-700 transition-colors">Help</a>
+      </nav>
+      <div class="md:hidden">
+        <button id="burger-btn" class="focus:outline-none">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
+      <ul class="flex flex-col space-y-4 px-6 py-4 font-semibold text-gray-700">
+        <li><a href="index.html" class="hover:text-blue-700 transition-colors">Home</a></li>
+        <li><a href="terms and conditions.html" class="hover:text-blue-700 transition-colors">Terms & Conditions</a></li>
+        <li><a href="business.html" class="hover:text-blue-700 transition-colors">Business Opportunity</a></li>
+        <li><a href="about us.html" class="hover:text-blue-700 transition-colors">About Us</a></li>
+        <li><a href="help.html" class="hover:text-blue-700 transition-colors">Help</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative bg-cover bg-center bg-no-repeat h-96 flex items-center" style="background-image: url('header.jpeg');">
+    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+    <div class="relative max-w-6xl mx-auto px-6 text-center md:text-left text-white">
+      <h2 class="text-5xl md:text-6xl font-bold mb-4 tracking-tight drop-shadow-lg">Join Pleroma Telecommunications</h2>
+      <p class="text-lg md:text-2xl tracking-wide drop-shadow-md">Become a franchise partner and help bring fast, reliable internet to your community.</p>
+    </div>
+  </section>
+
+  <!-- Franchise Opportunity Section -->
+  <section class="py-20 bg-blue-50">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-4xl font-bold text-gray-800 mb-12 text-center">Your Franchise Includes</h2>
+      <div class="grid md:grid-cols-2 gap-12">
+
+        <!-- Tower Setup -->
+        <div class="bg-white p-8 rounded-2xl shadow-md flex flex-col items-center text-center">
+          <img src="tower.jpeg" alt="Tower Setup" class="w-full rounded-lg mb-6 object-contain">
+          <h3 class="text-2xl font-semibold mb-4">Erection of Internet Tower</h3>
+          <p class="text-gray-700">We provide complete support for installing and commissioning your internet tower to ensure reliable service coverage.</p>
+        </div>
+
+        <!-- Staff Training -->
+        <div class="bg-white p-8 rounded-2xl shadow-md flex flex-col items-center text-center">
+          <img src="training.jpg" alt="Staff Training" class="w-full rounded-lg mb-6 object-contain">
+          <h3 class="text-2xl font-semibold mb-4">Comprehensive Staff Training</h3>
+          <p class="text-gray-700">Receive full training for your team on operations, customer support, and maintaining high service standards.</p>
+        </div>
+
+        <!-- Support -->
+        <div class="bg-white p-8 rounded-2xl shadow-md flex flex-col items-center text-center">
+          <img src="agent.jpg" alt="Ongoing Support" class="w-full rounded-lg mb-6 object-contain">
+          <h3 class="text-2xl font-semibold mb-4">Ongoing Support</h3>
+          <p class="text-gray-700">Our expert support team is always available to help with technical issues, marketing, and operational guidance.</p>
+        </div>
+
+        <!-- Marketing Materials -->
+        <div class="bg-white p-8 rounded-2xl shadow-md flex flex-col items-center text-center">
+          <img src="marketing.png" alt="Marketing Materials" class="w-full rounded-lg mb-6 object-contain">
+          <h3 class="text-2xl font-semibold mb-4">Marketing Materials</h3>
+          <p class="text-gray-700">Gain access to ready-made promotional materials, campaigns, and strategies to help grow your franchise quickly.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="py-20 bg-blue-700 text-white text-center">
+    <div class="max-w-4xl mx-auto px-6">
+      <h2 class="text-4xl font-bold mb-6">Ready to Start Your Journey?</h2>
+      <p class="text-lg mb-8">Join Pleroma Telecommunications and be part of an innovative network expanding into townships and rural areas.</p>
+      <a href="contact.html" class="inline-block bg-white text-blue-700 font-semibold py-4 px-8 rounded-lg shadow-lg hover:bg-gray-100 transition">Contact Us to Join</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="text-center text-gray-600 p-8 bg-white mt-10 shadow-inner tracking-wide">
+    &copy; 2025 Pleroma Telecommunications. All rights reserved.
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    const burgerBtn = document.getElementById('burger-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    burgerBtn.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
+  </script>
+
+</body>
+</html>
