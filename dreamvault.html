@@ -1,346 +1,1236 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>DreamVault</title>
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Inter,Arial;
-}
-
-body{
-
-background:#0f0f23;
-color:white;
-
-}
-
-/* NAVBAR */
-
-.navbar{
-
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:16px 30px;
-background:#14142a;
-border-bottom:1px solid rgba(255,255,255,0.05);
-
-}
-
-.logo{
-
-font-size:22px;
-font-weight:700;
-color:#5cc8ff;
-
-}
-
-.wallet-area{
-
-display:flex;
-align-items:center;
-gap:12px;
-
-}
-
-.balance{
-
-background:#1e1e3f;
-padding:8px 14px;
-border-radius:12px;
-font-size:14px;
-
-}
-
-.connect-btn{
-
-background:linear-gradient(135deg,#53f 0%,#00d4ff 100%);
-border:none;
-padding:10px 18px;
-border-radius:14px;
-color:white;
-font-weight:600;
-cursor:pointer;
-
-}
-
-/* HERO */
-
-.hero{
-
-text-align:center;
-padding:60px 20px;
-
-}
-
-.hero h1{
-
-font-size:42px;
-margin-bottom:10px;
-
-}
-
-.hero p{
-
-color:#aaa;
-
-}
-
-/* VAULT CARD */
-
-.vault{
-
-max-width:420px;
-margin:auto;
-margin-top:30px;
-
-background:#1b1b3a;
-
-padding:25px;
-
-border-radius:18px;
-
-box-shadow:0 10px 40px rgba(0,0,0,0.4);
-
-}
-
-.vault input{
-
-width:100%;
-padding:14px;
-border-radius:12px;
-border:none;
-margin-top:12px;
-background:#101025;
-color:white;
-
-}
-
-.vault button{
-
-width:100%;
-padding:14px;
-margin-top:14px;
-border:none;
-border-radius:12px;
-background:#5b6cff;
-color:white;
-font-weight:600;
-cursor:pointer;
-
-}
-
-/* PRICE TICKER */
-
-.ticker{
-
-margin-top:40px;
-overflow:hidden;
-white-space:nowrap;
-background:#14142a;
-padding:14px;
-
-}
-
-.ticker span{
-
-margin-right:40px;
-font-size:14px;
-
-}
-
-/* MOBILE */
-
-@media(max-width:600px){
-
-.hero h1{
-
-font-size:30px;
-
-}
-
-.navbar{
-
-padding:12px 16px;
-
-}
-
-}
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamVault - Secure TRX Vault</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+            color: white;
+            min-height: 100vh;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 30px;
+            background: rgba(20, 20, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #5cc8ff 0%, #53f 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .wallet-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .balance {
+            background: rgba(30, 30, 63, 0.8);
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            border: 1px solid rgba(92, 200, 255, 0.2);
+            display: none;
+        }
+
+        .balance.connected {
+            display: block;
+        }
+
+        .connect-btn {
+            background: linear-gradient(135deg, #53f 0%, #00d4ff 100%);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 14px;
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(83, 255, 255, 0.2);
+        }
+
+        .connect-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(83, 255, 255, 0.3);
+        }
+
+        .connect-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* HERO */
+        .hero {
+            text-align: center;
+            padding: 80px 20px 40px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 16px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff 0%, #a0a0ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            color: #8892b0;
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* THRESHOLD INFO */
+        .threshold-info {
+            text-align: center;
+            margin: 20px auto;
+            padding: 12px 24px;
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 12px;
+            max-width: 480px;
+            color: #ffc107;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* VAULT CARD */
+        .vault-container {
+            max-width: 480px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .vault {
+            background: rgba(27, 27, 58, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 32px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #5cc8ff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        .vault input {
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: rgba(16, 16, 37, 0.8);
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .vault input:focus {
+            border-color: #5cc8ff;
+            box-shadow: 0 0 0 3px rgba(92, 200, 255, 0.1);
+        }
+
+        .vault input::placeholder {
+            color: #666;
+        }
+
+        .vault button {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #5b6cff 0%, #53f 100%);
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vault button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(91, 108, 255, 0.4);
+        }
+
+        .vault button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .vault button.loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            margin-left: -10px;
+            margin-top: -10px;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spinner 0.8s linear infinite;
+        }
+
+        @keyframes spinner {
+            to { transform: rotate(360deg); }
+        }
+
+        .divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 32px 0;
+        }
+
+        /* INFO GRID */
+        .info-grid {
+            display: grid;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            font-size: 14px;
+        }
+
+        .info-label {
+            color: #8892b0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-value {
+            font-weight: 700;
+            color: #5cc8ff;
+        }
+
+        .info-value.warning {
+            color: #ffc107;
+        }
+
+        /* PENDING WITHDRAWAL CARD */
+        .pending-card {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .pending-card.active {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        .pending-title {
+            color: #ffc107;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .countdown {
+            font-size: 24px;
+            font-weight: 800;
+            color: #ffc107;
+            font-family: 'Courier New', monospace;
+            margin: 12px 0;
+        }
+
+        .pending-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.2) !important;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%) !important;
+        }
+
+        /* STATUS MESSAGES */
+        .status {
+            margin-top: 16px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .status.show {
+            display: block;
+        }
+
+        .status.success {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            color: #00ff88;
+        }
+
+        .status.error {
+            background: rgba(255, 71, 87, 0.1);
+            border: 1px solid rgba(255, 71, 87, 0.3);
+            color: #ff4757;
+        }
+
+        .status.info {
+            background: rgba(92, 200, 255, 0.1);
+            border: 1px solid rgba(92, 200, 255, 0.3);
+            color: #5cc8ff;
+        }
+
+        /* PRICE TICKER */
+        .ticker {
+            margin-top: 60px;
+            overflow: hidden;
+            background: rgba(20, 20, 42, 0.8);
+            padding: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .ticker-content {
+            display: inline-block;
+            white-space: nowrap;
+            animation: scroll 30s linear infinite;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .ticker-item {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 40px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .ticker-item .symbol {
+            color: #5cc8ff;
+            margin-right: 8px;
+            font-weight: 700;
+        }
+
+        .ticker-item .price {
+            color: white;
+        }
+
+        .ticker-item .change {
+            margin-left: 8px;
+            font-size: 12px;
+        }
+
+        .change.positive { color: #00ff88; }
+        .change.negative { color: #ff4757; }
+
+        /* MOBILE */
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 32px; }
+            .navbar { padding: 12px 16px; }
+            .vault { padding: 24px; }
+            .pending-actions { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
-
 <body>
-
-<!-- NAVBAR -->
-
-<div class="navbar">
-
-<div class="logo">DreamVault</div>
-
-<div class="wallet-area">
-
-<div class="balance" id="walletBalance">0 TRX</div>
-
-<button class="connect-btn" onclick="connectWallet()">Connect</button>
-
-</div>
-
-</div>
-
-
-<!-- HERO -->
-
-<div class="hero">
-
-<h1>Secure TRX Vault</h1>
-
-<p>Deposit TRX securely with time-locked withdrawals</p>
-
-</div>
-
-
-<!-- VAULT -->
-
-<div class="vault">
-
-<h3>Deposit TRX</h3>
-
-<input id="depositAmount" placeholder="Amount TRX">
-
-<button onclick="deposit()">Deposit</button>
-
-<h3 style="margin-top:20px;">Withdraw</h3>
-
-<input id="withdrawAmount" placeholder="Amount TRX">
-
-<button onclick="requestWithdraw()">Request Withdrawal</button>
-
-</div>
-
-
-<!-- PRICE TICKER -->
-
-<div class="ticker" id="ticker">
-
-Loading TRON market prices...
-
-</div>
-
-
-<script>
-
-const CONTRACT_ADDRESS="TBeGfACgzyYZcvkiYbCYKpnnddVmpCRdwp"
-
-let tronWeb
-let contract
-let address
-
-async function connectWallet(){
-
-if(!window.tronWeb){
-
-alert("Install TronLink")
-
-return
-
-}
-
-await window.tronWeb.request({method:"tron_requestAccounts"})
-
-while(!window.tronWeb.defaultAddress.base58){
-
-await new Promise(r=>setTimeout(r,200))
-
-}
-
-tronWeb=window.tronWeb
-
-address=tronWeb.defaultAddress.base58
-
-contract=await tronWeb.contract().at(CONTRACT_ADDRESS)
-
-loadBalance()
-
-}
-
-async function loadBalance(){
-
-const balance=await tronWeb.trx.getBalance(address)
-
-document.getElementById("walletBalance").innerText=
-
-tronWeb.fromSun(balance)+" TRX"
-
-}
-
-async function deposit(){
-
-const amount=document.getElementById("depositAmount").value
-
-await contract.deposit().send({
-
-callValue:tronWeb.toSun(amount),
-
-feeLimit:100000000
-
-})
-
-loadBalance()
-
-}
-
-async function requestWithdraw(){
-
-const amount=document.getElementById("withdrawAmount").value
-
-await contract.requestWithdrawal(tronWeb.toSun(amount)).send({
-
-feeLimit:100000000
-
-})
-
-}
-
-/* PRICE TICKER */
-
-async function loadPrices(){
-
-const res=await fetch("https://api.coingecko.com/api/v3/simple/price?ids=tron,just,sun-token,wink&vs_currencies=usd&include_24hr_change=true")
-
-const data=await res.json()
-
-let ticker=""
-
-ticker+=`TRX $${data.tron.usd} (${data.tron.usd_24h_change.toFixed(2)}%)`
-
-ticker+=` | JST $${data.just.usd}`
-
-ticker+=` | SUN $${data["sun-token"].usd}`
-
-ticker+=` | WIN $${data.wink.usd}`
-
-document.getElementById("ticker").innerText=ticker
-
-}
-
-loadPrices()
-
-setInterval(loadPrices,15000)
-
-</script>
-
+    <!-- NAVBAR -->
+    <div class="navbar">
+        <div class="logo">DreamVault</div>
+        <div class="wallet-area">
+            <div class="balance" id="walletBalance">0 TRX</div>
+            <button class="connect-btn" id="connectBtn" onclick="connectWallet()">Connect Wallet</button>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <div class="hero">
+        <h1>Secure TRX Vault</h1>
+        <p>Deposit TRX securely with 24-hour time-locked withdrawals</p>
+    </div>
+
+    <div class="threshold-info">
+        ⚠️ Minimum withdrawal: 107 TRX (~$30) | 24h timelock applies
+    </div>
+
+    <!-- VAULT -->
+    <div class="vault-container">
+        <div class="vault">
+            <!-- DEPOSIT SECTION -->
+            <div class="section-title">
+                <span>💰</span> Deposit TRX
+            </div>
+            <div class="input-group">
+                <input type="number" id="depositAmount" placeholder="Amount in TRX" step="0.000001" min="0">
+            </div>
+            <button id="depositBtn" onclick="deposit()">Deposit TRX</button>
+            <div id="depositStatus" class="status"></div>
+
+            <div class="divider"></div>
+
+            <!-- REQUEST WITHDRAWAL SECTION -->
+            <div class="section-title">
+                <span>🔒</span> Request Withdrawal
+            </div>
+            <div class="input-group">
+                <input type="number" id="withdrawAmount" placeholder="Amount in TRX (min 107)" step="0.000001" min="107">
+            </div>
+            <button id="requestWithdrawBtn" onclick="requestWithdraw()">Request Withdrawal (24h Lock)</button>
+            <div id="withdrawStatus" class="status"></div>
+
+            <!-- PENDING WITHDRAWAL CARD -->
+            <div id="pendingCard" class="pending-card">
+                <div class="pending-title">⏰ Pending Withdrawal</div>
+                <div>Amount: <span id="pendingAmount">0</span> TRX</div>
+                <div class="countdown" id="countdown">00:00:00</div>
+                <div class="pending-actions">
+                    <button class="btn-secondary" onclick="cancelWithdrawal()">Cancel</button>
+                    <button class="btn-success" id="executeBtn" onclick="executeWithdrawal()" disabled>Execute</button>
+                </div>
+                <div id="pendingStatus" class="status"></div>
+            </div>
+
+            <!-- INFO GRID -->
+            <div class="info-grid">
+                <div class="info-row">
+                    <span class="info-label">💼 Wallet Balance</span>
+                    <span class="info-value" id="walletBalanceDisplay">0 TRX</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">🏦 Vault Balance</span>
+                    <span class="info-value" id="vaultBalance">0 TRX</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">📊 Contract Total</span>
+                    <span class="info-value" id="contractTotal">0 TRX</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">⏱️ Timelock</span>
+                    <span class="info-value">24 Hours</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRICE TICKER -->
+    <div class="ticker">
+        <div class="ticker-content" id="ticker">
+            Loading TRON market prices...
+        </div>
+    </div>
+
+    <script>
+        // Contract Configuration - NILE TESTNET
+        const CONTRACT_ADDRESS = "TBeGfACgzyYZcvkiYbCYKpnnddVmpCRdwp";
+        
+        // Complete ABI from your DreamVault contract
+        const CONTRACT_ABI = [
+            {
+                "inputs": [],
+                "stateMutability": "nonpayable",
+                "type": "constructor"
+            },
+            {
+                "inputs": [
+                    {"internalType": "uint256", "name": "current", "type": "uint256"},
+                    {"internalType": "uint256", "name": "required", "type": "uint256"}
+                ],
+                "name": "InsufficientBalance",
+                "type": "error"
+            },
+            {
+                "inputs": [{"internalType": "uint256", "name": "readyAt", "type": "uint256"}],
+                "name": "WithdrawalNotReady",
+                "type": "error"
+            },
+            {
+                "inputs": [],
+                "name": "NoPendingWithdrawal",
+                "type": "error"
+            },
+            {
+                "inputs": [],
+                "name": "WithdrawalAlreadyPending",
+                "type": "error"
+            },
+            {
+                "inputs": [],
+                "name": "TransferFailed",
+                "type": "error"
+            },
+            {
+                "inputs": [],
+                "name": "InvalidAmount",
+                "type": "error"
+            },
+            {
+                "inputs": [],
+                "name": "NotOwner",
+                "type": "error"
+            },
+            {
+                "inputs": [],
+                "name": "ContractPaused",
+                "type": "error"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {"indexed": false, "internalType": "address", "name": "account", "type": "address"}
+                ],
+                "name": "Paused",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {"indexed": false, "internalType": "address", "name": "account", "type": "address"}
+                ],
+                "name": "Unpaused",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {"indexed": true, "internalType": "address", "name": "user", "type": "address"},
+                    {"indexed": false, "internalType": "uint256", "name": "amountSUN", "type": "uint256"},
+                    {"indexed": false, "internalType": "uint256", "name": "newBalanceSUN", "type": "uint256"}
+                ],
+                "name": "Deposited",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {"indexed": true, "internalType": "address", "name": "user", "type": "address"},
+                    {"indexed": false, "internalType": "uint256", "name": "amountSUN", "type": "uint256"},
+                    {"indexed": false, "internalType": "uint256", "name": "executeAfter", "type": "uint256"}
+                ],
+                "name": "WithdrawalRequested",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {"indexed": true, "internalType": "address", "name": "user", "type": "address"},
+                    {"indexed": false, "internalType": "uint256", "name": "amountSUN", "type": "uint256"}
+                ],
+                "name": "WithdrawalExecuted",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {"indexed": true, "internalType": "address", "name": "user", "type": "address"},
+                    {"indexed": false, "internalType": "uint256", "name": "amountSUN", "type": "uint256"}
+                ],
+                "name": "WithdrawalCancelled",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {"indexed": true, "internalType": "address", "name": "to", "type": "address"},
+                    {"indexed": false, "internalType": "uint256", "name": "amountSUN", "type": "uint256"}
+                ],
+                "name": "EmergencyWithdrawal",
+                "type": "event"
+            },
+            {
+                "inputs": [],
+                "name": "THRESHOLD",
+                "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "TIMELOCK_DURATION",
+                "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [{"internalType": "address", "name": "", "type": "address"}],
+                "name": "balances",
+                "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "owner",
+                "outputs": [{"internalType": "address", "name": "", "type": "address"}],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "paused",
+                "outputs": [{"internalType": "bool", "name": "", "type": "bool"}],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "totalDeposits",
+                "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "deposit",
+                "outputs": [],
+                "stateMutability": "payable",
+                "type": "function"
+            },
+            {
+                "inputs": [{"internalType": "uint256", "name": "amount", "type": "uint256"}],
+                "name": "requestWithdrawal",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "executeWithdrawal",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "cancelWithdrawal",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "pause",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "unpause",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {"internalType": "address payable", "name": "to", "type": "address"},
+                    {"internalType": "uint256", "name": "amount", "type": "uint256"}
+                ],
+                "name": "emergencyWithdraw",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [{"internalType": "address", "name": "user", "type": "address"}],
+                "name": "isWithdrawalReady",
+                "outputs": [
+                    {"internalType": "bool", "name": "ready", "type": "bool"},
+                    {"internalType": "uint256", "name": "timeRemaining", "type": "uint256"}
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [{"internalType": "address", "name": "user", "type": "address"}],
+                "name": "getPendingWithdrawal",
+                "outputs": [
+                    {
+                        "components": [
+                            {"internalType": "uint256", "name": "amount", "type": "uint256"},
+                            {"internalType": "uint256", "name": "requestTime", "type": "uint256"},
+                            {"internalType": "bool", "name": "exists", "type": "bool"}
+                        ],
+                        "internalType": "struct DreamVault.PendingWithdrawal",
+                        "name": "",
+                        "type": "tuple"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "getContractBalance",
+                "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [{"internalType": "address", "name": "user", "type": "address"}],
+                "name": "getAvailableBalance",
+                "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {"internalType": "address", "name": "user", "type": "address"},
+                    {"internalType": "uint256", "name": "amount", "type": "uint256"}
+                ],
+                "name": "canRequestWithdrawal",
+                "outputs": [{"internalType": "bool", "name": "", "type": "bool"}],
+                "stateMutability": "view",
+                "type": "function"
+            }
+        ];
+
+        let tronWeb = null;
+        let contract = null;
+        let address = null;
+        let isConnecting = false;
+        let countdownInterval = null;
+
+        // Initialize on load
+        window.addEventListener('load', async () => {
+            // Check if TronLink is already injected
+            if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
+                await initTronWeb();
+            }
+            
+            // Listen for TronLink injection
+            window.addEventListener('tronLink#initialized', async () => {
+                if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
+                    await initTronWeb();
+                }
+            });
+
+            // Listen for account changes
+            window.addEventListener('message', (e) => {
+                if (e.data.message && e.data.message.action === "setAccount") {
+                    if (e.data.message.data.address) {
+                        initTronWeb();
+                    } else {
+                        disconnectWallet();
+                    }
+                }
+                if (e.data.message && e.data.message.action === "setNode") {
+                    window.location.reload();
+                }
+            });
+
+            loadPrices();
+            setInterval(loadPrices, 30000);
+            
+            // Start polling for pending withdrawal status
+            setInterval(checkPendingWithdrawal, 5000);
+        });
+
+        async function initTronWeb() {
+            try {
+                tronWeb = window.tronWeb;
+                address = tronWeb.defaultAddress.base58;
+                
+                // Verify we're on Nile Testnet
+                const node = await tronWeb.trx.getNodeInfo();
+                console.log('Connected to node:', node);
+                
+                // Initialize contract with ABI
+                contract = await tronWeb.contract(CONTRACT_ABI, CONTRACT_ADDRESS);
+                
+                updateUIConnected();
+                await refreshAllData();
+                
+                showStatus('depositStatus', 'Wallet connected to DreamVault!', 'success');
+            } catch (error) {
+                console.error('Init error:', error);
+                showStatus('depositStatus', 'Failed to initialize: ' + error.message, 'error');
+            }
+        }
+
+        async function connectWallet() {
+            if (isConnecting) return;
+            isConnecting = true;
+            
+            const btn = document.getElementById('connectBtn');
+            btn.disabled = true;
+            btn.textContent = 'Connecting...';
+
+            try {
+                if (!window.tronWeb) {
+                    // Try to detect TronLink with timeout
+                    let attempts = 0;
+                    while (!window.tronWeb && attempts < 10) {
+                        await new Promise(r => setTimeout(r, 200));
+                        attempts++;
+                    }
+                    
+                    if (!window.tronWeb) {
+                        throw new Error('TronLink not detected. Please install the extension.');
+                    }
+                }
+
+                // Request account access
+                if (window.tronLink && window.tronLink.request) {
+                    await window.tronLink.request({ method: 'tron_requestAccounts' });
+                } else if (window.tronWeb.request) {
+                    await window.tronWeb.request({ method: 'tron_requestAccounts' });
+                }
+
+                // Wait for address to be available
+                let attempts = 0;
+                while (!window.tronWeb.defaultAddress.base58 && attempts < 20) {
+                    await new Promise(r => setTimeout(r, 100));
+                    attempts++;
+                }
+
+                if (!window.tronWeb.defaultAddress.base58) {
+                    throw new Error('Could not get wallet address. Please unlock TronLink.');
+                }
+
+                await initTronWeb();
+
+            } catch (error) {
+                console.error('Connection error:', error);
+                showStatus('depositStatus', error.message, 'error');
+                btn.disabled = false;
+                btn.textContent = 'Connect Wallet';
+            } finally {
+                isConnecting = false;
+            }
+        }
+
+        function disconnectWallet() {
+            tronWeb = null;
+            contract = null;
+            address = null;
+            updateUIDisconnected();
+        }
+
+        function updateUIConnected() {
+            const btn = document.getElementById('connectBtn');
+            const balanceEl = document.getElementById('walletBalance');
+            
+            btn.textContent = address.slice(0, 6) + '...' + address.slice(-4);
+            btn.style.background = 'linear-gradient(135deg, #00d4ff 0%, #53f 100%)';
+            balanceEl.classList.add('connected');
+        }
+
+        function updateUIDisconnected() {
+            const btn = document.getElementById('connectBtn');
+            const balanceEl = document.getElementById('walletBalance');
+            
+            btn.textContent = 'Connect Wallet';
+            btn.style.background = '';
+            btn.disabled = false;
+            balanceEl.classList.remove('connected');
+            balanceEl.textContent = '0 TRX';
+            
+            // Reset displays
+            document.getElementById('walletBalanceDisplay').textContent = '0 TRX';
+            document.getElementById('vaultBalance').textContent = '0 TRX';
+            document.getElementById('contractTotal').textContent = '0 TRX';
+            document.getElementById('pendingCard').classList.remove('active');
+        }
+
+        async function refreshAllData() {
+            await loadWalletBalance();
+            await loadVaultData();
+            await checkPendingWithdrawal();
+        }
+
+        async function loadWalletBalance() {
+            if (!tronWeb || !address) return;
+            
+            try {
+                const balance = await tronWeb.trx.getBalance(address);
+                const trxBalance = tronWeb.fromSun(balance);
+                const formatted = parseFloat(trxBalance).toFixed(4);
+                
+                document.getElementById('walletBalance').textContent = formatted + ' TRX';
+                document.getElementById('walletBalanceDisplay').textContent = formatted + ' TRX';
+            } catch (error) {
+                console.error('Balance load error:', error);
+            }
+        }
+
+        async function loadVaultData() {
+            if (!contract || !address) return;
+            
+            try {
+                // Get user's vault balance
+                const vaultBal = await contract.getAvailableBalance(address).call();
+                document.getElementById('vaultBalance').textContent = 
+                    parseFloat(tronWeb.fromSun(vaultBal)).toFixed(4) + ' TRX';
+                
+                // Get contract total deposits
+                const total = await contract.totalDeposits().call();
+                document.getElementById('contractTotal').textContent = 
+                    parseFloat(tronWeb.fromSun(total)).toFixed(4) + ' TRX';
+                
+            } catch (error) {
+                console.error('Vault data error:', error);
+            }
+        }
+
+        async function checkPendingWithdrawal() {
+            if (!contract || !address) return;
+            
+            try {
+                const pending = await contract.getPendingWithdrawal(address).call();
+                const card = document.getElementById('pendingCard');
+                
+                if (pending && pending.exists) {
+                    const amount = tronWeb.fromSun(pending.amount);
+                    const requestTime = parseInt(pending.requestTime);
+                    const duration = 24 * 60 * 60; // 24 hours in seconds
+                    const executeTime = requestTime + duration;
+                    
+                    document.getElementById('pendingAmount').textContent = parseFloat(amount).toFixed(4);
+                    card.classList.add('active');
+                    
+                    // Update countdown
+                    if (countdownInterval) clearInterval(countdownInterval);
+                    
+                    const updateCountdown = () => {
+                        const now = Math.floor(Date.now() / 1000);
+                        const remaining = Math.max(0, executeTime - now);
+                        const executeBtn = document.getElementById('executeBtn');
+                        
+                        if (remaining === 0) {
+                            document.getElementById('countdown').textContent = 'READY';
+                            document.getElementById('countdown').style.color = '#00ff88';
+                            executeBtn.disabled = false;
+                        } else {
+                            const hours = Math.floor(remaining / 3600);
+                            const mins = Math.floor((remaining % 3600) / 60);
+                            const secs = remaining % 60;
+                            document.getElementById('countdown').textContent = 
+                                `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                            executeBtn.disabled = true;
+                        }
+                    };
+                    
+                    updateCountdown();
+                    countdownInterval = setInterval(updateCountdown, 1000);
+                    
+                } else {
+                    card.classList.remove('active');
+                    if (countdownInterval) {
+                        clearInterval(countdownInterval);
+                        countdownInterval = null;
+                    }
+                }
+            } catch (error) {
+                console.error('Check pending error:', error);
+            }
+        }
+
+        async function deposit() {
+            if (!contract) {
+                showStatus('depositStatus', 'Please connect wallet first', 'error');
+                return;
+            }
+
+            const amountInput = document.getElementById('depositAmount');
+            const amount = amountInput.value.trim();
+            
+            if (!amount || parseFloat(amount) <= 0) {
+                showStatus('depositStatus', 'Please enter a valid amount', 'error');
+                return;
+            }
+
+            const btn = document.getElementById('depositBtn');
+            setLoading(btn, true);
+
+            try {
+                showStatus('depositStatus', 'Confirm transaction in TronLink...', 'info');
+                
+                const tx = await contract.deposit().send({
+                    callValue: tronWeb.toSun(amount),
+                    feeLimit: 100000000
+                });
+
+                console.log('Deposit transaction:', tx);
+                
+                showStatus('depositStatus', 'Processing transaction...', 'info');
+                await confirmTransaction(tx);
+                
+                showStatus('depositStatus', 'Deposit successful!', 'success');
+                amountInput.value = '';
+                await refreshAllData();
+                
+            } catch (error) {
+                console.error('Deposit error:', error);
+                let msg = error.message || 'Transaction failed';
+                if (msg.includes('user denied')) msg = 'Transaction rejected by user';
+                showStatus('depositStatus', 'Deposit failed: ' + msg, 'error');
+            } finally {
+                setLoading(btn, false);
+            }
+        }
+
+        async function requestWithdraw() {
+            if (!contract) {
+                showStatus('withdrawStatus', 'Please connect wallet first', 'error');
+                return;
+            }
+
+            const amountInput = document.getElementById('withdrawAmount');
+            const amount = amountInput.value.trim();
+            
+            if (!amount || parseFloat(amount) <= 0) {
+                showStatus('withdrawStatus', 'Please enter a valid amount', 'error');
+                return;
+            }
+
+            if (parseFloat(amount) < 107) {
+                showStatus('withdrawStatus', 'Minimum withdrawal is 107 TRX', 'error');
+                return;
+            }
+
+            // Check if withdrawal is possible
+            try {
+                const canWithdraw = await contract.canRequestWithdrawal(address, tronWeb.toSun(amount)).call();
+                if (!canWithdraw) {
+                    showStatus('withdrawStatus', 'Cannot request withdrawal. Check balance or pending requests.', 'error');
+                    return;
+                }
+            } catch (e) {
+                console.error('Can withdraw check failed:', e);
+            }
+
+            const btn = document.getElementById('requestWithdrawBtn');
+            setLoading(btn, true);
+
+            try {
+                showStatus('withdrawStatus', 'Confirm transaction in TronLink...', 'info');
+                
+                const tx = await contract.requestWithdrawal(tronWeb.toSun(amount)).send({
+                    feeLimit: 100000000
+                });
+
+                console.log('Withdrawal request transaction:', tx);
+                
+                showStatus('withdrawStatus', 'Processing transaction...', 'info');
+                await confirmTransaction(tx);
+                
+                showStatus('withdrawStatus', 'Withdrawal requested! 24h timelock started.', 'success');
+                amountInput.value = '';
+                await refreshAllData();
+                
+            } catch (error) {
+                console.error('Withdrawal request error:', error);
+                let msg = error.message || 'Transaction failed';
+                if (msg.includes('WithdrawalAlreadyPending')) msg = 'You already have a pending withdrawal';
+                if (msg.includes('InsufficientBalance')) msg = 'Insufficient vault balance';
+                if (msg.includes('user denied')) msg = 'Transaction rejected by user';
+                showStatus('withdrawStatus', 'Request failed: ' + msg, 'error');
+            } finally {
+                setLoading(btn, false);
+            }
+        }
+
+        async function executeWithdrawal() {
+            if (!contract) return;
+            
+            const btn = document.getElementById('executeBtn');
+            setLoading(btn, true);
+
+            try {
+                showStatus('pendingStatus', 'Executing withdrawal...', 'info');
+                
+                const tx = await contract.executeWithdrawal().send({
+                    feeLimit: 100000000
+                });
+
+                console.log('Execute withdrawal transaction:', tx);
+                await confirmTransaction(tx);
+                
+                showStatus('pendingStatus', 'Withdrawal executed successfully!', 'success');
+                await refreshAllData();
+                
+            } catch (error) {
+                console.error('Execute error:', error);
+                let msg = error.message || 'Execution failed';
+                if (msg.includes('WithdrawalNotReady')) msg = 'Timelock not expired yet';
+                showStatus('pendingStatus', msg, 'error');
+            } finally {
+                setLoading(btn, false);
+            }
+        }
+
+        async function cancelWithdrawal() {
+            if (!contract) return;
+            
+            const btn = event.target;
+            setLoading(btn, true);
+
+            try {
+                showStatus('pendingStatus', 'Cancelling withdrawal...', 'info');
+                
+                const tx = await contract.cancelWithdrawal().send({
+                    feeLimit: 100000000
+                });
+
+                console.log('Cancel transaction:', tx);
+                await confirmTransaction(tx);
+                
+                showStatus('pendingStatus', 'Withdrawal cancelled!', 'success');
+                await refreshAllData();
+                
+            } catch (error) {
+                console.error('Cancel error:', error);
+                showStatus('pendingStatus', 'Cancel failed: ' + error.message, 'error');
+            } finally {
+                setLoading(btn, false);
+            }
+        }
+
+        async function confirmTransaction(txID) {
+            let confirmed = false;
+            let attempts = 0;
+            const maxAttempts = 30;
+            
+            while (!confirmed && attempts < maxAttempts) {
+                try {
+                    const tx = await tronWeb.trx.getTransactionInfo(txID);
+                    if (tx && tx.receipt) {
+                        confirmed = true;
+                        if (tx.receipt.result !== 'SUCCESS') {
+                            throw new Error('Transaction failed on-chain: ' + tx.receipt.result);
+                        }
+                        return tx;
+                    }
+                } catch (e) {
+                    if (e.message.includes('failed on-chain')) throw e;
+                }
+                await new Promise(r => setTimeout(r, 1000));
+                attempts++;
+            }
+            
+            if (!confirmed) {
+                throw new Error('Transaction confirmation timeout');
+            }
+        }
+
+        function setLoading(btn, loading) {
+            if (loading) {
+                btn.disabled = true;
+                btn.classList.add('loading');
+                btn.dataset.originalText = btn.textContent;
+                btn.style.color = 'transparent';
+            } else {
+                btn.disabled = false;
+                btn.classList.remove('loading');
+                btn.style.color = '';
+            }
+        }
+
+        function showStatus(elementId, message, type) {
+            const el = document.getElementById(elementId);
+            el.textContent = message;
+            el.className = 'status show ' + type;
+            
+            if (type === 'success') {
+                setTimeout(() => {
+                    el.classList.remove('show');
+                }, 5000);
+            }
+        }
+
+        /* PRICE TICKER */
+        async function loadPrices() {
+            try {
+                const res = await fetch(
+                    'https://api.coingecko.com/api/v3/simple/price?ids=tron&vs_currencies=usd&include_24hr_change=true'
+                );
+                const data = await res.json();
+                
+                const price = data.tron.usd;
+                const change = data.tron.usd_24h_change;
+                const changeClass = change >= 0 ? 'positive' : 'negative';
+                const changeSign = change >= 0 ? '+' : '';
+                
+                // Duplicate for seamless scrolling
+                const tickerHTML = `
+                    <div class="ticker-item">
+                        <span class="symbol">TRX</span>
+                        <span class="price">$${price.toFixed(4)}</span>
+                        <span class="change ${changeClass}">${changeSign}${change.toFixed(2)}%</span>
+                    </div>
+                `.repeat(4);
+                
+                document.getElementById('ticker').innerHTML = tickerHTML;
+            } catch (error) {
+                console.error('Price load error:', error);
+            }
+        }
+    </script>
 </body>
-
 </html>
