@@ -1155,27 +1155,80 @@
         async function confirmTransaction(txID) {
             let confirmed = false;
             let attempts = 0;
-            const maxAttempts = 30;
+            const maxAttempts = 45; // Increased from 30 to 45 seconds
             
             while (!confirmed && attempts < maxAttempts) {
                 try {
-                    const tx = await tronWeb.trx.getTransactionInfo(txID);
+                    // Try multiple methods to check transaction status
+                    let tx = null;
+                    
+                    // Method 1: getTransactionInfo
+                    try {
+                        tx = await tronWeb.trx.getTransactionInfo(txID);
+                    } catch (e) {
+                        // Transaction might not be indexed yet, continue polling
+                    }
+                    
+                    // Method 2: If getTransactionInfo returns null/empty, try getTransaction
+                    if (!tx || !tx.receipt) {
+                        try {
+                            const txRaw = await tronWeb.trx.getTransaction(txID);
+                            if (txRaw && txRaw.ret && txRaw.ret[0] && txRaw.ret[0].contractRet === 'SUCCESS') {
+                                // Transaction exists and was successful, but may not be fully processed yet
+                                // Wait a bit more for full confirmation
+                                await new Promise(r => setTimeout(r, 2000));
+                                continue; // Go to next iteration to check getTransactionInfo again
+                            }
+                        } catch (e) {
+                            // Transaction not found yet
+                        }
+                    }
+                    
+                    // Check if we have full transaction info with receipt
                     if (tx && tx.receipt) {
                         confirmed = true;
-                        if (tx.receipt.result !== 'SUCCESS') {
-                            throw new Error('Transaction failed on-chain: ' + tx.receipt.result);
+                        
+                        // Check for success
+                        if (tx.receipt.result === 'SUCCESS' || 
+                            (tx.contract_result && tx.contract_result[0] === '')) {
+                            return tx;
+                        } else {
+                            throw new Error('Transaction failed on-chain: ' + (tx.receipt.result || 'Unknown error'));
                         }
-                        return tx;
                     }
+                    
+                    // Check for block number as alternative confirmation sign
+                    if (tx && tx.blockNumber && tx.blockNumber > 0) {
+                        // Transaction is in a block, likely successful
+                        await new Promise(r => setTimeout(r, 1000)); // One more check
+                        continue;
+                    }
+                    
                 } catch (e) {
-                    if (e.message.includes('failed on-chain')) throw e;
+                    if (e.message && e.message.includes('failed on-chain')) {
+                        throw e; // Re-throw actual failure
+                    }
+                    // Otherwise continue polling (network errors, etc.)
                 }
+                
                 await new Promise(r => setTimeout(r, 1000));
                 attempts++;
             }
             
             if (!confirmed) {
-                throw new Error('Transaction confirmation timeout');
+                // Final check: query one more time with getUnconfirmedTransaction
+                try {
+                    const finalCheck = await tronWeb.trx.getTransaction(txID);
+                    if (finalCheck && finalCheck.ret && finalCheck.ret[0] && 
+                        finalCheck.ret[0].contractRet === 'SUCCESS') {
+                        console.log('Transaction confirmed via final check:', txID);
+                        return finalCheck;
+                    }
+                } catch (e) {
+                    console.error('Final check failed:', e);
+                }
+                
+                throw new Error('Transaction confirmation timeout - please check your wallet or TronScan for status');
             }
         }
 
