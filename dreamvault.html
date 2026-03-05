@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DreamVault</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#1e3c72;
+color:white;
+padding:30px;
+text-align:center;
+}
+
+button{
+padding:12px 25px;
+border:none;
+border-radius:10px;
+background:#667eea;
+color:white;
+font-size:16px;
+cursor:pointer;
+}
+
+.card{
+background:rgba(255,255,255,0.1);
+padding:20px;
+border-radius:15px;
+margin:20px auto;
+max-width:600px;
+}
+
+input{
+padding:10px;
+width:200px;
+border-radius:10px;
+border:none;
+margin:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>🏦 DreamVault</h1>
+
+<div class="card">
+
+<button onclick="connectWallet()">Connect TronLink</button>
+
+<p id="address"></p>
+
+</div>
+
+<div class="card">
+
+<h3>Contract Balance</h3>
+
+<p id="contractBalance">Not Loaded</p>
+
+<button onclick="loadBalance()">Refresh Balance</button>
+
+</div>
+
+<div class="card">
+
+<h3>Deposit TRX</h3>
+
+<input id="depositAmount" placeholder="TRX Amount">
+
+<button onclick="deposit()">Deposit</button>
+
+</div>
+
+<script>
+
+const CONTRACT_ADDRESS = "TBeGfACgzyYZcvkiYbCYKpnnddVmpCRdwp";
+
+const ABI = [
+{
+"inputs":[],
+"name":"deposit",
+"outputs":[],
+"stateMutability":"payable",
+"type":"function"
+},
+{
+"inputs":[],
+"name":"getContractBalance",
+"outputs":[{"internalType":"uint256","name":"","type":"uint256"}],
+"stateMutability":"view",
+"type":"function"
+}
+];
+
+let tronWeb;
+let contract;
+let userAddress;
+
+async function connectWallet(){
+
+try{
+
+if(!window.tronWeb){
+
+alert("Install TronLink Wallet");
+
+return;
+
+}
+
+await window.tronWeb.request({
+method:"tron_requestAccounts"
+});
+
+const wait = async () => {
+
+while(!window.tronWeb.defaultAddress.base58){
+
+await new Promise(r=>setTimeout(r,200));
+
+}
+
+};
+
+await wait();
+
+tronWeb = window.tronWeb;
+
+userAddress = tronWeb.defaultAddress.base58;
+
+document.getElementById("address").innerText =
+"Connected: " + userAddress;
+
+contract = await tronWeb.contract(ABI,CONTRACT_ADDRESS);
+
+loadBalance();
+
+}
+
+catch(e){
+
+alert("Connection failed: "+e.message);
+
+}
+
+}
+
+async function loadBalance(){
+
+if(!contract) return;
+
+const balance = await contract.getContractBalance().call();
+
+document.getElementById("contractBalance").innerText =
+tronWeb.fromSun(balance) + " TRX";
+
+}
+
+async function deposit(){
+
+try{
+
+const amount = document.getElementById("depositAmount").value;
+
+await contract.deposit().send({
+
+callValue: tronWeb.toSun(amount),
+
+feeLimit:100000000
+
+});
+
+alert("Deposit successful");
+
+loadBalance();
+
+}
+
+catch(e){
+
+alert("Transaction failed: "+e.message);
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
